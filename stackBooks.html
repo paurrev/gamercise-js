@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <ul id="stack-books"></ul>
+      <form>
+        <input
+          type="text"
+          placeholder="Ingrese el titulo del libro"
+          id="book-title"
+          autocomplete="off"
+        />
+        <input
+          type="text"
+          placeholder="Autor"
+          id="autor-title"
+          autocomplete="off"
+        />
+      </form>
+      <button id="add-book">Add Book</button>
+      <button id="remove-book">Remove Book</button>
+    </section>
+  </body>
+</html>
+
+<script>
+  const stackOfBooks = document.querySelector('#stack-books');
+  const addButton = document.querySelector('#add-book');
+  const removeButton = document.querySelector('#remove-book');
+  const bookTitle = document.querySelector('#book-title');
+  const autorTitle = document.querySelector('#autor-title');
+
+  let stackBooks = [];
+  class Book {
+    constructor(title, author) {
+      this.title = title;
+      this.author = author;
+    }
+  }
+
+  // Push a new book to  the Stack
+  const addBookToStack = (title, author) => {
+    if (!title || !author) return alert('Todos los campos son obligatorios');
+    else {
+      const newBook = new Book(title, author);
+      stackBooks.push(newBook);
+      return newBook;
+    }
+  };
+
+  const removeBookToStack = () => {
+    if (stackBooks.length < 1) return alert('No hay libros en la pila');
+    const listaBooks = stackOfBooks.getElementsByTagName('li');
+
+    const ultimoBook = listaBooks[listaBooks.length - 1];
+    stackOfBooks.removeChild(ultimoBook);
+  };
+
+  addButton.addEventListener('click', () => {
+    event.preventDefault();
+
+    addBookToStack(bookTitle.value, autorTitle.value);
+    let printStackBook = stackBooks.map(
+      (book) => `<li> Title: ${book.title} - Author: ${book.author}</li>`
+    );
+    const bookPrintWithouthComa = printStackBook.join('');
+    stackOfBooks.innerHTML = `${bookPrintWithouthComa}`;
+    bookTitle.value = '';
+    autorTitle.value = '';
+  });
+
+  removeButton.addEventListener('click', () => {
+    event.preventDefault();
+
+    removeBookToStack();
+    stackBooks.pop();
+  });
+</script>
