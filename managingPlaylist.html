@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <ul id="list-songs"></ul>
+      <form>
+        <label for=""></label>
+        <input
+          type="text"
+          placeholder="Add a song name"
+          id="song-name"
+          autocomplete="off"
+        />
+        <!-- <input type="text" placeholder="Add an artist" id="artist-name" autocomplete="off" required /> -->
+      </form>
+      <button id="add-button-song">Add Song</button>
+      <button id="delete-button-song">Delete Song</button>
+    </section>
+  </body>
+</html>
+
+<script>
+  let playlist = [];
+
+  const addSongButton = document.querySelector('#add-button-song');
+  const deleteButton = document.querySelector('#delete-button-song');
+  const listSongs = document.querySelector('#list-songs');
+  const songNameInput = document.querySelector('#song-name');
+  const artistNameInput = document.querySelector('#artist-name');
+
+  function createElement(type, text) {
+    const element = document.createElement(type);
+    element.textContent = text;
+    return element;
+  }
+
+  addSongButton.addEventListener('click', () => {
+    playlist.unshift(songNameInput.values);
+  });
+</script>
