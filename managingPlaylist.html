@@ -6,8 +6,12 @@
     <title>Document</title>
   </head>
   <body>
+    <section id="songs">
+      <ul id="list-songs">
+        <!-- List of songs will be inserted here -->
+      </ul>
+    </section>
     <section>
-      <ul id="list-songs"></ul>
       <form>
         <label for=""></label>
         <input
@@ -33,13 +37,45 @@
   const songNameInput = document.querySelector('#song-name');
   const artistNameInput = document.querySelector('#artist-name');
 
-  function createElement(type, text) {
-    const element = document.createElement(type);
-    element.textContent = text;
-    return element;
+  //
+  function displayPlaylist() {
+    // Create new li elements for each song in the playlist and append them to the ul
+    playlist.forEach((song, index) => {
+      const li = document.createElement('li');
+      li.setAttribute('id', `song${index}`);
+      li.appendChild(document.createTextNode(`${song} by ${song.artist}`));
+      li.addEventListener('click', () => selectSong(index));
+      listSongs.appendChild(li);
+    });
+  }
+
+  function removeFirstSong() {
+    playlist.shift();
+
+    let liSong = listSongs.getElementsByTagName('li');
+
+    let lastSong = liSong[0];
+
+    listSongs.removeChild(lastSong);
   }
 
   addSongButton.addEventListener('click', () => {
-    playlist.unshift(songNameInput.values);
+    if (songNameInput.value) {
+      playlist.unshift(songNameInput.value);
+      listSongs.innerHTML = playlist
+        .map((song) => `<li class="song">${song}</li>`)
+        .join('');
+      songNameInput.value = '';
+    } else {
+      console.log('Ingresa algun valor');
+    }
+  });
+
+  deleteButton.addEventListener('click', () => {
+    if (playlist.length > 0) {
+      removeFirstSong();
+    } else {
+      console.log('The playlist is empty');
+    }
   });
 </script>
